@@ -13,11 +13,12 @@ function AppLayer() {
   return (
     <div className="h-screen  grid grid-rows-[auto_1fr_auto]    ">
       {isLoading && <Loader />}
+      {/* {true && <Loader />} */}
 
       <Header />
 
       <div className="overflow-scroll">
-        <main className=" max-w-3xl bg-stone-400 mx-auto">
+        <main className=" max-w-3xl mx-auto">
           <Outlet />
         </main>
       </div>

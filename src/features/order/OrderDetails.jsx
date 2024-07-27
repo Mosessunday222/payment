@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../service/apiCloth";
+import Button from "../../ui/Button";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -52,14 +53,14 @@ function OrderDetails() {
             type="text"
             name="customer"
             required
-            className="rounded-full px-4 py-2  border border-stone-200 transition-all duration-300 focus:outline-none focus:ring focus:ring-stone-200 w-full md:px-6 md:py-3"
+            className="input"
           />
         </div>
 
         <div>
           <label>Phone number</label>
           <div>
-            <input type="tel" name="phone" required />
+            <input type="tel" name="phone" required className="input" />
           </div>
           {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
@@ -67,7 +68,7 @@ function OrderDetails() {
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input type="text" name="address" required className="input"/>
           </div>
         </div>
 
@@ -85,12 +86,12 @@ function OrderDetails() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button
-            className="inline-block bg-stone-600  py-3 rounded-full tracking-widest px-4 mx-3 font-semibold uppercase hover:bg-stone-500 hover:underline transition-colors duration-500 focus:outline-none focus:ring focus:ring-red-600 focus:ring-offset-2 disabled:cursor-not-allowed"
+          <Button
+           
             disabled={isSubmitting}
           >
             {isSubmitting ? "Placing order..." : "Order now!"}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>

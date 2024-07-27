@@ -3,7 +3,7 @@ import Home from "./page/Home";
 import AppLayer from "./ui/AppLayer";
 import ABout from "./page/ABout";
 import Product, { loader as productLoader } from "./page/Product";
-import Cart from "./features/cart/cart";
+import Cart from "./features/cart/Cart";
 import Error from "./ui/Error";
 import OrderDetails ,{action as formAction} from "./features/order/OrderDetails";
 import OrderId, { loader as orderLoader } from "./features/order/OrderId";

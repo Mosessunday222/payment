@@ -6,10 +6,9 @@ function Product() {
   const products = useLoaderData();
   // console.log(products);
   return (
-    <ul>
+    <ul className="grid grid-cols-1  sm:grid-cols-2 rounded-md  my-5  mx-3" >
       {products.map((product) => (
-        <ProductList product={product} key={product.id}   />
-        
+        <ProductList product={product} key={product.id} />
       ))}
     </ul>
   );
