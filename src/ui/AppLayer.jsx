@@ -17,7 +17,7 @@ function AppLayer() {
 
       <Header />
 
-      <div className="overflow-scroll">
+      <div className="overflow-scroll bg-yellow-200">
         <main className=" max-w-3xl mx-auto">
           <Outlet />
         </main>

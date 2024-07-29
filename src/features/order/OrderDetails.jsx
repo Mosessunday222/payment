@@ -43,36 +43,46 @@ function OrderDetails() {
   const cart = fakeCart;
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className="py-6 px-4">
+      <h2 className="text-xl font-semibold mb-8">Ready to order? Let's go!</h2>
 
       <Form method="POST">
-        <div>
-          <label>First Name</label>
+        <div className="mb-5 flex flex-col sm:flex-row items-center">
+          <label className="sm:w-40">First Name</label>
           <input
             type="text"
             name="customer"
             required
-            className="input"
+            className="input w-full h-10"
           />
         </div>
 
-        <div>
-          <label>Phone number</label>
-          <div>
-            <input type="tel" name="phone" required className="input" />
-          </div>
-          {formErrors?.phone && <p>{formErrors.phone}</p>}
-        </div>
-
-        <div>
-          <label>Address</label>
-          <div>
-            <input type="text" name="address" required className="input"/>
+        <div className="mb-5 flex flex-col sm:flex-row items-center">
+          <label className="sm:w-40">Phone number</label>
+          <div className="w-full">
+            <input
+              type="tel"
+              name="phone"
+              required
+              className="input w-full h-10"
+            />
+            {formErrors?.phone && <p className="text-xs font-bold mt-3 bg-red-600 text-red-200 rounded-md">{formErrors.phone}</p>}
           </div>
         </div>
 
-        <div>
+        <div className="mb-5 flex flex-col sm:flex-row items-center">
+          <label className="sm:w-40">Address</label>
+          <div className="w-full">
+            <input
+              type="text"
+              name="address"
+              required
+              className="input w-full h-10"
+            />
+          </div>
+        </div>
+
+        <div className=" mb-7 flex items-center gap-6 ">
           <input
             type="checkbox"
             name="priority"
@@ -81,15 +91,12 @@ function OrderDetails() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">Want to give your order priority?</label>
+          <label htmlFor="priority" className="font-medium">Want to give your order priority?</label>
         </div>
 
-        <div>
+        <div className="text-center">
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button
-           
-            disabled={isSubmitting}
-          >
+          <Button type="primary" disabled={isSubmitting}>
             {isSubmitting ? "Placing order..." : "Order now!"}
           </Button>
         </div>

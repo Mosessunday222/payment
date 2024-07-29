@@ -7,7 +7,7 @@ body {
 
 @layer components {
   .input {
-    @apply rounded-full px-4 py-2  border border-stone-200 transition-all duration-300 focus:outline-none focus:ring focus:ring-stone-200 w-full md:px-6 md:py-3;
+    @apply rounded-full px-4 py-2  border border-stone-200 transition-all duration-300 focus:outline-none focus:ring focus:ring-stone-200  md:px-6 md:py-3;
   }
   /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
 .loader {
