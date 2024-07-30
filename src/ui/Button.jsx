@@ -10,7 +10,8 @@ function Button({ children, disabled, to, type }) {
   const styles = {
     primary: base + " py-3  px-4 md:py-4 md:px-6",
     small: base + " py-2 px-4 md:px-5 md:py-2.5 text-xs",
-    secondary: "inline-block bg-blue-300  text-sm py-3  px-4 md:py-4 md:px-6 rounded-full tracking-widest  mx-3 font-semibold uppercase hover:bg-blue-500 hover:underline transition-colors duration-500 focus:outline-none focus:ring focus:ring-blue-600 focus:ring-offset-2 disabled:cursor-not-allowed",
+    secondary:
+      "inline-block bg-blue-300  text-sm py-3  px-4 md:py-4 md:px-6 rounded-full tracking-widest  mx-3 font-semibold uppercase hover:bg-blue-500 hover:underline transition-colors duration-500 focus:outline-none focus:ring focus:ring-blue-600 focus:ring-offset-2 disabled:cursor-not-allowed",
   };
   if (to) {
     return (
@@ -19,7 +20,9 @@ function Button({ children, disabled, to, type }) {
       </Link>
     );
   }
-
+  {
+    /* <p>08083456488 morly</p> */
+  }
   return (
     <button disabled={disabled} className={styles[type]}>
       {children}
