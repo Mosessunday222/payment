@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../service/apiCloth";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
+
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -34,6 +36,7 @@ const fakeCart = [
 ];
 
 function OrderDetails() {
+  const username = useSelector((state) => state.user.username);
   const navigation = useNavigation();
   console.log("Navigation state:", navigation.state);
 
@@ -52,6 +55,7 @@ function OrderDetails() {
           <input
             type="text"
             name="customer"
+            defaultValue={username}
             required
             className="input w-full h-10"
           />
@@ -66,7 +70,11 @@ function OrderDetails() {
               required
               className="input w-full h-10"
             />
-            {formErrors?.phone && <p className="text-xs font-bold mt-3 bg-red-600 text-red-200 rounded-md">{formErrors.phone}</p>}
+            {formErrors?.phone && (
+              <p className="text-xs font-bold mt-3 bg-red-600 text-red-200 rounded-md">
+                {formErrors.phone}
+              </p>
+            )}
           </div>
         </div>
 
@@ -91,7 +99,9 @@ function OrderDetails() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority" className="font-medium">Want to give your order priority?</label>
+          <label htmlFor="priority" className="font-medium">
+            Want to give your order priority?
+          </label>
         </div>
 
         <div className="text-center">
