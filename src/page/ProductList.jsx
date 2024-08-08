@@ -1,10 +1,25 @@
 import OrderDetails from "../features/order/OrderDetails";
 import { formatCurrency } from "../utlis.js/helpers";
 import Button from "../ui/Button";
+import { useDispatch } from "react-redux";
+import { addItem } from "../features/cart/cartSlice";
 // import PropTypes from "prop-types";
 
 function ProductList({ product }) {
+  const dispatch = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = product;
+
+  function handlerAddNewItem() {
+    // console.log(id);
+    const newitems = {
+      name,
+      pizzasId: id,
+      quantity: 1,
+      unitPrice,
+      totalPrice: unitPrice * 1,
+    };
+    dispatch(addItem(newitems));
+  }
 
   return (
     <li className="py-4 sm:mx-3 ">
@@ -34,7 +49,11 @@ function ProductList({ product }) {
             <p className="text-red-600  uppercase md:text-nowrap">Sold Out</p>
           )}
 
-          <Button type="small">ADD to cart</Button>
+          {soldOut || (
+            <Button type="small" onClick={handlerAddNewItem}>
+              ADD to cart
+            </Button>
+          )}
         </div>
       </div>
       {/* <OrderDetails /> */}
