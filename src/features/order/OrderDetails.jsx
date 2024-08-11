@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../service/apiCloth";
 import Button from "../../ui/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   clearCart,
   getCart,
@@ -13,6 +13,7 @@ import EmptyCart from "../cart/EmptyCart";
 import OrderId from "./OrderId";
 import store from "../../store";
 import { formatCurrency } from "../../utlis.js/helpers";
+import { fetchAddress } from "../user/userSlice";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -45,14 +46,27 @@ const isValidPhone = (str) =>
 // ];
 
 function OrderDetails() {
-  const username = useSelector((state) => state.user.username);
+  const {
+    username,
+    status: addressStatus,
+    error: errorAddress,
+    position,
+    address,
+  } = useSelector((state) => state.user);
+
+  const isLoadingAddressStatus = addressStatus === "loading";
+  const dispatch = useDispatch();
+  function handlerFetchAddress(e) {
+    e.preventDefault();
+    dispatch(fetchAddress());
+  }
   const navigation = useNavigation();
   console.log("Navigation state:", navigation.state);
 
   const [withPriority, setWithPriority] = useState(false);
   const isSubmitting = navigation.state === "submitting";
   const totalCartPrice = useSelector(getTotalPrice);
-  const priority = withPriority ? totalCartPrice * 0.2 : 0
+  const priority = withPriority ? totalCartPrice * 0.2 : 0;
   const totalPrice = totalCartPrice + priority;
   const totalQuantity = useSelector(getTotoalCartQuantity);
   const cart = useSelector(getCart);
@@ -92,7 +106,7 @@ function OrderDetails() {
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col sm:flex-row items-center">
+        <div className="mb-5 flex flex-col sm:flex-row items-center relative">
           <label className="sm:w-40">Address</label>
           <div className="w-full">
             <input
@@ -100,8 +114,23 @@ function OrderDetails() {
               name="address"
               required
               className="input w-full h-10"
+              disabled={isLoadingAddressStatus}
+              defaultValue={address}
             />
+
+            {addressStatus === "error" && (
+              <p className="text-xs font-bold mt-3 bg-red-600 text-red-200 rounded-md">
+                {errorAddress}
+              </p>
+            )}
           </div>
+          {!position.latitude && !position.longitude && (
+            <span className="absolute  right-[-9px] bottom-[4px] sm:bottom-0 z-50  ">
+              <Button onClick={handlerFetchAddress} type="small">
+                location
+              </Button>
+            </span>
+          )}
         </div>
 
         <div className=" mb-7 flex items-center gap-6 ">
@@ -117,10 +146,21 @@ function OrderDetails() {
             Want to give your order priority?
           </label>
         </div>
-
+        {/* to get the details back to the api */}
         <div className="text-center">
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button disabled={isSubmitting} type="primary">
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position.longitude &&
+              position.latitude`${position.latitude}, ${position.longitude} : ' `
+            }
+          />
+          <Button
+            disabled={isSubmitting || isLoadingAddressStatus}
+            type="primary"
+          >
             {isSubmitting
               ? "Placing order...."
               : `Order now ${formatCurrency(totalPrice)}`}
@@ -139,7 +179,7 @@ export async function action({ request }) {
   const order = {
     ...data,
     cart: JSON.parse(data.cart),
-    priority: data.priority === "on",
+    priority: data.priority === "true",
   };
   console.log(order);
 
